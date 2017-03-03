@@ -6,4 +6,5 @@
       "version": "1.1.0",
       "type": "platform"
     }
-3. 
+3. 在ASP.NET Core 1.1 中 UseRuntimeInfoPage 被移除了，需要注意：https://github.com/aspnet/Home/issues/1632
+4. 

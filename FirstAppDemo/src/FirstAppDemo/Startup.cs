@@ -40,6 +40,8 @@ namespace FirstAppDemo
                 app.UseDeveloperExceptionPage();
             }
 
+            // 使用Run 注册的中间件不能呼叫另一个中间件，它必须对请求作出回应。
+            // 它是最后一个中间件。
             app.Run(async (context) =>
             {
                 var msg = Configuration["message"];
