@@ -28,6 +28,8 @@ namespace FirstAppDemo
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // 添加 MVC 服务。
+            services.AddMvcCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,8 @@ namespace FirstAppDemo
 
             // 包含 UseDefaultFiles 和 UseStaticFiles 两个中间件。
             app.UseFileServer();
+            // 添加 MVC 中间件。
+            app.UseMvcWithDefaultRoute();
 
             // 使用Run 注册的中间件不能呼叫另一个中间件，它必须对请求作出回应。
             // 它是最后一个中间件。
