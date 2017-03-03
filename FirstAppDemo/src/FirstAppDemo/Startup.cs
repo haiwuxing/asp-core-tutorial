@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.AspNetCore.Routing;
 
 namespace FirstAppDemo
 {
@@ -45,7 +46,7 @@ namespace FirstAppDemo
             // 包含 UseDefaultFiles 和 UseStaticFiles 两个中间件。
             app.UseFileServer();
             // 添加 MVC 中间件。
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(ConfigureRoute);
 
             // 使用Run 注册的中间件不能呼叫另一个中间件，它必须对请求作出回应。
             // 它是最后一个中间件。
@@ -54,6 +55,12 @@ namespace FirstAppDemo
                 var msg = Configuration["message"];
                 await context.Response.WriteAsync(msg);
             });
+        }
+
+        private void ConfigureRoute(IRouteBuilder routeBuilder)
+        {
+            //Home/Index
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
