@@ -60,7 +60,8 @@ namespace FirstAppDemo
         private void ConfigureRoute(IRouteBuilder routeBuilder)
         {
             //Home/Index
-            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("Default",
+                "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
