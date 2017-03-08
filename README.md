@@ -31,3 +31,8 @@
 		      "web.config"
 		    ]
 		   },
+5. 第15课例子2中，参照教程会出现“HTTP 406 错误”。解决办法：将代码
+		services.AddMvcCore();
+改为
+        var mvcCore = services.AddMvcCore();
+        mvcCore.AddJsonFormatters();         		
