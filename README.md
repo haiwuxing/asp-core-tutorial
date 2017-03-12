@@ -46,4 +46,6 @@
 	
 	2. 在第16课中发现：如果将project.json 中的`"Microsoft.AspNetCore.Mvc.Core": "1.0.1` 改为 `"Microsoft.AspNetCore.Mvc": "1.0.1"` , Startup.cs 中的 `services.AddMvcCore();` 改为 `services.AddMvc();`, 则不需要`mvcCore.AddJsonFormatters();` 也可以返回 json字符串。
     
-6. 
+6. 第17课中EF引用到的两个包新版本中进行了重命名：
+	1. EntityFramework.MicrosoftSqlServer -> Microsoft.EntityFrameworkCore.SqlServer
+	2. EntityFramework.Commands -> "Microsoft.EntityFrameworkCore.Tools
