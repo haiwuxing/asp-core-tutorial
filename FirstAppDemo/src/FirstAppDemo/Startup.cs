@@ -30,9 +30,7 @@ namespace FirstAppDemo
         public void ConfigureServices(IServiceCollection services)
         {
             // 添加 MVC 服务。
-            var mvcCore = services.AddMvcCore();
-            // 不加这句，使用ObjectResult 返回时会出现“HTTP 406 错误”
-            mvcCore.AddJsonFormatters();
+            var mvcCore = services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

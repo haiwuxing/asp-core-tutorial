@@ -35,10 +35,15 @@
 		      "web.config"
 		    ]
 		   },
-5. 第15课例子2中，参照教程会出现“HTTP 406 错误”。解决办法：将代码
+5. 
+	1. 第15课例子2中，参照教程会出现“HTTP 406 错误”。解决办法：将代码
 
-		services.AddMvcCore();
+			services.AddMvcCore();
 改为
 
-        var mvcCore = services.AddMvcCore();
-        mvcCore.AddJsonFormatters();         		
+        	var mvcCore = services.AddMvcCore();
+        	mvcCore.AddJsonFormatters();
+	
+	2. 在第16课中发现：如果将project.json 中的`"Microsoft.AspNetCore.Mvc.Core": "1.0.1` 改为 `"Microsoft.AspNetCore.Mvc": "1.0.1"` , Startup.cs 中的 `services.AddMvcCore();` 改为 `services.AddMvc();`, 则不需要`mvcCore.AddJsonFormatters();` 也可以返回 json字符串。
+    
+6. 
