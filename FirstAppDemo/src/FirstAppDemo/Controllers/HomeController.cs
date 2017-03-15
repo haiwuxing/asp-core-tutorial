@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FirstAppDemo.Models;
+using System.Collections.Generic; // for IEnumerable interface.
+using System.Linq; // for FirstOrDefault
 
 namespace FirstAppDemo.Controllers
 {
     public class HomeController : Controller
     {
+        FirstAppDemoDbContext _context;
+
+        public HomeController(FirstAppDemoDbContext context)
+        {
+            _context = context;
+        }
 
         //public ContentResult Index()
         //{
@@ -21,11 +29,53 @@ namespace FirstAppDemo.Controllers
         //    return new ObjectResult(employee);
         //}
 
-        // 16课：Views 例子。
+        //// 16课：Views 例子。
+        //public ViewResult Index()
+        //{
+        //    var employee = new Employee { ID = 1, Name = "李健" };
+        //    return View(employee);
+        //}
+
+        // 第18课
         public ViewResult Index()
         {
-            var employee = new Employee { ID = 1, Name = "李健" };
-            return View(employee);
+            var model = new HomePageViewModel();
+
+            if (_context != null)
+            {
+                SQLEmployeeData sqlData = new SQLEmployeeData(_context);
+                model.Employees = sqlData.GetAll();
+            }
+
+            return View(model);
         }
+    }
+
+    // 操作 Employees 表。
+    public class SQLEmployeeData
+    {
+        private FirstAppDemoDbContext _context { get; set; }
+        public SQLEmployeeData(FirstAppDemoDbContext context)
+        {
+            _context = context;
+        }
+        public void Add(Employee emp)
+        {
+            _context.Add(emp);
+            _context.SaveChanges();
+        }
+        public Employee Get(int ID)
+        {
+            return _context.Employees.FirstOrDefault(e => e.ID == ID);
+        }
+        public IEnumerable<Employee> GetAll()
+        {
+            return _context.Employees.ToList<Employee>();
+        }
+    }
+
+    public class HomePageViewModel
+    {
+        public IEnumerable<Employee> Employees { get; set; }
     }
 }

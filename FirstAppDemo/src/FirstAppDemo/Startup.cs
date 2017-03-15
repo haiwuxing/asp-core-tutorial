@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,26 +7,32 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Routing;
+using FirstAppDemo.Models; // for FirstAppDemoDbContext class.
+using Microsoft.EntityFrameworkCore; // for option.UseSqlServer()
 
 namespace FirstAppDemo
 {
     public class Startup
     {
-        public Startup()
+        public IConfiguration Configuration { get; set; }
+
+        public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("AppSettings.json");
             Configuration = builder.Build();
         }
-        public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             // 添加 MVC 服务。
-            var mvcCore = services.AddMvc();
+            services.AddMvc();
+            // 添加 Entity Framework 服务，并且使用SQL Server  服务。
+            services.AddEntityFrameworkSqlServer().AddDbContext<FirstAppDemoDbContext>
+                (option => option.UseSqlServer(Configuration["database:connection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
