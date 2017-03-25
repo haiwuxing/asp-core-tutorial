@@ -1,25 +1,18 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>首页</title>
-</head>
+﻿@model FirstAppDemo.Controllers.HomePageViewModel
+@{ 
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table>
+    @foreach (var employee in Model.Employees)
+    {
+        <tr>
+            <td>
+                @*@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })*@
+            </td>
+            <td>@employee.Name</td>
+        </tr>
 
-<body>
-    <h1>欢迎！</h1>
+    }
+</table>
 
-    @*<div>
-        @Model.Name
-    </div>*@
-    <table>
-        @foreach (var employee in Model.Employees)
-        {
-            <tr>
-                <td>
-                    @*@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })*@
-                </td>
-                <td>@employee.Name</td>
-            </tr>
-
-        }
-    </table>
-</body>
-</html>
