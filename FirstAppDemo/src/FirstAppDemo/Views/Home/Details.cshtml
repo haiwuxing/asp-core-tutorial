@@ -1,0 +1,15 @@
+﻿@model FirstAppDemo.Models.Employee
+<html>
+<head>
+    <title>@Model.Name</title>
+</head>
+
+<body>
+    <h1>@Model.Name</h1>
+    <div>Id: @Model.Id</div>
+
+    <div>
+        @Html.ActionLink("Home", "Index");
+    </div>
+</body>
+</html>

@@ -49,6 +49,19 @@ namespace FirstAppDemo.Controllers
 
             return View(model);
         }
+
+        public IActionResult Details(int id)
+        {
+            SQLEmployeeData sqlData = new SQLEmployeeData(_context);
+            var model = sqlData.Get(id);
+
+            if(model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
     }
 
     // 操作 Employees 表。
@@ -64,9 +77,9 @@ namespace FirstAppDemo.Controllers
             _context.Add(emp);
             _context.SaveChanges();
         }
-        public Employee Get(int ID)
+        public Employee Get(int Id)
         {
-            return _context.Employees.FirstOrDefault(e => e.ID == ID);
+            return _context.Employees.FirstOrDefault(e => e.Id == Id);
         }
         public IEnumerable<Employee> GetAll()
         {

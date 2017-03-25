@@ -1,13 +1,17 @@
-﻿@model FirstAppDemo.Controllers.HomePageViewModel
+﻿@*为了@Html.ActionLin*@
+@model HomePageViewModel
 @{ 
     ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1>欢迎</h1>
 <table>
     @foreach (var employee in Model.Employees)
     {
         <tr>
             <td>
-                @*@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })*@
+                @Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })
+                @*<a asp-action="Details" asp-route-id="@employee.Id">Details</a>*@
             </td>
             <td>@employee.Name</td>
         </tr>
