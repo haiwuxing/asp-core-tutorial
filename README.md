@@ -9,6 +9,7 @@
 	    }
 3. 在ASP.NET Core 1.1 中 UseRuntimeInfoPage 被移除了，需要注意：https://github.com/aspnet/Home/issues/1632
 4. 第7节 Configuration（添加配置文件AppSettings.json）
+
 	1. 使用代码
 
 	    	var builder = new ConfigurationBuilder()
