@@ -9,41 +9,49 @@
 	    }
 3. 在ASP.NET Core 1.1 中 UseRuntimeInfoPage 被移除了，需要注意：https://github.com/aspnet/Home/issues/1632
 4. 第7节 Configuration（添加配置文件AppSettings.json）
-
 	1. 使用代码
-
-	    	var builder = new ConfigurationBuilder()
-				.AddJsonFile("AppSettings.json");
+    ```
+    var builder = new ConfigurationBuilder()
+    .AddJsonFile("AppSettings.json");
+    ```
 会引起“500 Internal Server Error” 错误。需要指明AppSettings.json 的路径，正确代码如下：
-
-			var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("AppSettings.json");
-
+    ```
+    var builder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+	.AddJsonFile("AppSettings.json");
+    ```
 	2. 部署到服务器上还会有错误“500 Internal Server Error”。需要将 project.json 的
-	
-			"publishOptions": {
+	```
+	"publishOptions": {
 		    "include": [
 		      "wwwroot",
 		      "web.config"
 		    ]
 		  	},
-改为：
-			"publishOptions": {
-		    "include": [
-		      "wwwroot",
-		      "AppSettings.json",
-		      "web.config"
-		    ]
-		   },
+    ```
+			
+   改为：
+	```
+		"publishOptions": {
+			    "include": [
+			      "wwwroot",
+			      "AppSettings.json",
+			      "web.config"
+			    ]
+			   },
+	```
+		
 5. 第15课：
 	1. 例子2中，参照教程会出现“HTTP 406 错误”。解决办法：将代码
-
-			services.AddMvcCore();
-改为
-
-        	var mvcCore = services.AddMvcCore();
-        	mvcCore.AddJsonFormatters();
+	```
+	services.AddMvcCore();
+    ```
+  改为
+	```
+	var mvcCore = services.AddMvcCore();
+	mvcCore.AddJsonFormatters();
+	```
+        	
 	
 	2. 在第16课中发现：如果将project.json 中的`"Microsoft.AspNetCore.Mvc.Core": "1.0.1` 改为 `"Microsoft.AspNetCore.Mvc": "1.0.1"` , Startup.cs 中的 `services.AddMvcCore();` 改为 `services.AddMvc();`, 则不需要`mvcCore.AddJsonFormatters();` 也可以返回 json字符串。
     
@@ -133,3 +141,21 @@
 			@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })
 	改为：注释掉该代码。
 
+### 22 - Razor Tag Helpers
+#### 出现错误：
+```
+An error occurred during the compilation of a resource required to process this request. Please review the following specific error details and modify your source code appropriately.
+
+/Views/_ViewImports.cshtml
+
+Cannot resolve TagHelper containing assembly 'Microsoft.AspNet.Mvc.TagHelpers'. Error: Could not load file or assembly 'Microsoft.AspNet.Mvc.TagHelpers, Culture=neutral, PublicKeyToken=null'. 系统找不到指定的文件。
+@addTagHelper *, Microsoft.AspNet.Mvc.TagHelpers
+```
+#### 原因：
+ASP.NET Core 中改名了，`Microsoft.AspNet.Mvc.TagHelpers`改名为`Microsoft.AspNetCore.Mvc.TagHelpers`。
+#### 解决办法：
+**_ViewImports.cshtml**文件中的代码改为如下：
+```
+@using FirstAppDemo.Controllers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+```

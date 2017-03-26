@@ -10,8 +10,10 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })
-                @*<a asp-action="Details" asp-route-id="@employee.Id">Details</a>*@
+                @* HTML Helper ActionLink *@
+                @*@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })*@
+                @*Tag Helper*@
+                <a asp-action="Details" asp-route-id="@employee.Id">Details</a>
             </td>
             <td>@employee.Name</td>
         </tr>
