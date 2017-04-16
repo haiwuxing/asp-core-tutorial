@@ -2,6 +2,7 @@
 using FirstAppDemo.Models;
 using System.Collections.Generic; // for IEnumerable interface.
 using System.Linq; // for FirstOrDefault
+using System.ComponentModel.DataAnnotations; // for [Required, MaxLength(80)]
 
 namespace FirstAppDemo.Controllers
 {
@@ -62,6 +63,36 @@ namespace FirstAppDemo.Controllers
 
             return View(model);
         }
+
+        // 给表单传递内容。
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            SQLEmployeeData sqlData = new SQLEmployeeData(_context);
+            var model = sqlData.Get(id);
+
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        // 表单处理。
+        [HttpPost]
+        public IActionResult Edit(int id, EmployeeEditViewModel input)
+        {
+            SQLEmployeeData sqlData = new SQLEmployeeData(_context);
+            var employee = sqlData.Get(id);
+
+            if (employee != null && ModelState.IsValid)
+            {
+                employee.Name = input.Name;
+                _context.SaveChanges();
+                return RedirectToAction("Details", new { id = employee.Id });
+            }
+            return View(employee);
+        }
     }
 
     // 操作 Employees 表。
@@ -90,5 +121,11 @@ namespace FirstAppDemo.Controllers
     public class HomePageViewModel
     {
         public IEnumerable<Employee> Employees { get; set; }
+    }
+
+    public class EmployeeEditViewModel
+    {
+        [Required, MaxLength(80)]
+        public string Name { get; set; }
     }
 }

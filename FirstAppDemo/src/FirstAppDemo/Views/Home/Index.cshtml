@@ -9,13 +9,18 @@
     @foreach (var employee in Model.Employees)
     {
         <tr>
+            <td>@employee.Name</td>
+
             <td>
                 @* HTML Helper ActionLink *@
                 @*@Html.ActionLink(employee.Id.ToString(), "Details", new { id = employee.Id })*@
                 @*Tag Helper*@
-                <a asp-action="Details" asp-route-id="@employee.Id">Details</a>
+                <a asp-action="Details" 
+                   asp-route-id="@employee.Id">Details</a>
+                <a asp-controller="Home" 
+                   asp-action="Edit"
+                   asp-route-id="@employee.Id">Edit</a>
             </td>
-            <td>@employee.Name</td>
         </tr>
 
     }
