@@ -3,9 +3,11 @@ using FirstAppDemo.Models;
 using System.Collections.Generic; // for IEnumerable interface.
 using System.Linq; // for FirstOrDefault
 using System.ComponentModel.DataAnnotations; // for [Required, MaxLength(80)]
+using Microsoft.AspNetCore.Authorization; // for [Authorize]
 
 namespace FirstAppDemo.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         FirstAppDemoDbContext _context;
@@ -38,6 +40,7 @@ namespace FirstAppDemo.Controllers
         //}
 
         // 第18课
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var model = new HomePageViewModel();
