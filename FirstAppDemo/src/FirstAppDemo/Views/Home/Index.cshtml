@@ -2,9 +2,9 @@
 @model HomePageViewModel
 @{ 
     ViewBag.Title = "首页";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>欢迎</h1>
+
 <table>
     @foreach (var employee in Model.Employees)
     {
@@ -22,7 +22,10 @@
                    asp-route-id="@employee.Id">Edit</a>
             </td>
         </tr>
-
     }
 </table>
+
+<div>
+    <a asp-action="Create">Create</a>
+</div>
 

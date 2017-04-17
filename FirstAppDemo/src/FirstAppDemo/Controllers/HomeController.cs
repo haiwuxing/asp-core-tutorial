@@ -93,6 +93,28 @@ namespace FirstAppDemo.Controllers
             }
             return View(employee);
         }
+
+        [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(EmployeeEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var employee = new Employee();
+                employee.Name = model.Name;
+                var context = _context;
+
+                SQLEmployeeData sqlData = new SQLEmployeeData(context);
+                sqlData.Add(employee);
+                return RedirectToAction("Details", new { id = employee.Id });
+            }
+            return View();
+        }
     }
 
     // 操作 Employees 表。

@@ -1,0 +1,18 @@
+﻿@model FirstAppDemo.Models.Employee
+@{
+    ViewBag.Title = "Create";
+}
+<h1>Create</h1>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.EditorFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+}
